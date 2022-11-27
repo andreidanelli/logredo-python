@@ -6,17 +6,25 @@ import UploadMetadados
 
 # Connect to the Bank and run the script
 def connectionDatabase(sql):
-    connection = psycopg2.connect(host='localhost', database='logredo', user='root', password='root');
+    connection = psycopg2.connect(host='localhost', database='logredo', user='root', password='root')
     cursor = connection.cursor()
+    # print('Database connection opened!')
 
     try:
         cursor.execute(sql)
+        
+        if cursor.pgresult_ptr is not None:
+            return  cursor.fetchall()
+
         connection.commit()
     except(Exception, psycopg2.DatabaseError) as Error:
         print("Database Error: %s" % Error)
         connection.rollback()
         cursor.close()
-        return 1
+    finally:
+        if connection is not None:
+            connection.close()
+            # print('Database connection closed!')
         
     cursor.close()
 

@@ -2,7 +2,8 @@
 import psycopg2
 # Load data from metadata
 import UploadMetadados
-
+# Archives Constants
+from Constants import Constants
 
 # Connect to the Bank and run the script
 def connectionDatabase(sql):
@@ -30,8 +31,7 @@ def connectionDatabase(sql):
 
 # Commands DML Database
 def commandSelectAll():
-    sql = 'SELECT * FROM t_logredo ORDER BY ID'
-    return connectionDatabase(sql)
+    return connectionDatabase(Constants.SELECT_REGISTERS)
 
 def commandInsert(ID, A, B):
     sql = f'INSERT INTO t_logredo VALUES ({ID}, {A}, {B})'
@@ -42,12 +42,10 @@ def commandUpdate(ID, FIELD, VALUE):
     return connectionDatabase(sql)
 
 def commandCreateTable():
-    sql = 'CREATE TABLE t_logredo (ID INTEGER PRIMARY KEY, A INTEGER NULL, B INTEGER NULL)'
-    return connectionDatabase(sql)
+    return connectionDatabase(Constants.CREATE_TABLE)
 
 def commandDropTable():
-    sql = 'DROP TABLE IF EXISTS t_logredo'
-    return connectionDatabase(sql)
+    return connectionDatabase(Constants.DROP_TABLE)
 
 # Load metadata files for table
 def archiveToTable():

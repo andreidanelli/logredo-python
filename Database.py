@@ -6,16 +6,16 @@ import UploadMetadados
 from Constants import Constants
 
 # Connect to the Bank and run the script
-def connectionDatabase(sql):
-    connection = psycopg2.connect(host='localhost', database='logredo', user='root', password='root')
-    cursor = connection.cursor()
-    # print('Database connection opened!')
-
+def connectionDatabase(SQL):
     try:
-        cursor.execute(sql)
+        connection = psycopg2.connect(host='localhost', database='logredo', user='root', password='root')
+        cursor = connection.cursor()
+        # print('Database connection opened!')
+
+        cursor.execute(SQL)
         
         if cursor.pgresult_ptr is not None:
-            return  cursor.fetchall()
+           return cursor.fetchall()
 
         connection.commit()
     except(Exception, psycopg2.DatabaseError) as Error:
@@ -25,21 +25,20 @@ def connectionDatabase(sql):
     finally:
         if connection is not None:
             connection.close()
-            # print('Database connection closed!')
+        cursor.close()
+        # print('Database connection closed!')
         
-    cursor.close()
-
 # Commands DML Database
 def commandSelectAll():
     return connectionDatabase(Constants.SELECT_REGISTERS)
 
 def commandInsert(ID, A, B):
-    sql = f'INSERT INTO t_logredo VALUES ({ID}, {A}, {B})'
-    return connectionDatabase(sql)
+    SQL = f'INSERT INTO t_logredo VALUES ({ID}, {A}, {B})'
+    return connectionDatabase(SQL)
 
 def commandUpdate(ID, FIELD, VALUE):
-    sql = f'UPDATE t_logredo SET {FIELD}={VALUE} WHERE ID = {ID}'
-    return connectionDatabase(sql)
+    SQL = f'UPDATE t_logredo SET {FIELD}={VALUE} WHERE ID = {ID}'
+    return connectionDatabase(SQL)
 
 def commandCreateTable():
     return connectionDatabase(Constants.CREATE_TABLE)

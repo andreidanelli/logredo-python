@@ -1,12 +1,14 @@
-from Database import load
-from LoadLogFile import loadLogFile
+# Configs data base
+from Database     import load
+# Import archive log
+from CheckLogRedo import checkLogRedo
 
 
 def main():
    load()
-   loadLogFile()
+   checkLogRedo()
 
 
 if __name__ == '__main__':
     load()
-    loadLogFile()
+    checkLogRedo()

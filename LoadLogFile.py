@@ -51,6 +51,10 @@ def loadLogFile():
     except Exception as Error:
         print('Unable to read log file!')
         exit()
+    finally:
+        FListRedo.clear()
+        FListOpened.clear()
+        frb.close()
 
     return FListReturn
 
@@ -67,13 +71,12 @@ def actionCommit(current_transaction):
 def actionCheckpoint(current_transaction):
     global FActionCheckpoint
     global FListRedo
+    
     FActionCheckpoint = True
-
-    if current_transaction:
-        FListRedo = set(current_transaction.split(','))
+    FListRedo = set(current_transaction.split(','))
 
 def actionValuesLine(current_transaction):
-    # Add values ​​to dictionary
+    # Add values ​​to vetor
     current_transaction = current_transaction.split(',')
     vetor = []
     vetor = current_transaction
@@ -83,13 +86,14 @@ def verifyActionUpdate(vetor):
     # If the transaction is open, add values ​​to update.
     # If not there was Checkpoint
     if (vetor[0] in FListRedo or not FActionCheckpoint and (vetor[0] in FListOpened)):
-        FListReturn.append({
-            'FTransaction': vetor[0],
-            'FId'         : vetor[1],
-            'FColumn'     : vetor[2],
-            'FOldValue'   : vetor[3],
-            'FNewValue'   : vetor[4]
-        })
+        list = {   
+                'FTransaction': vetor[0],
+                'FId'         : vetor[1],
+                'FColumn'     : vetor[2],
+                'FOldValue'   : vetor[3],
+                'FNewValue'   : vetor[4]
+                }
+        FListReturn.append(list)
 
 def removeString(String, line):
     line_replace = re.sub(String, '', line).strip()

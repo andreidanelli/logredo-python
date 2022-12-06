@@ -19,10 +19,3 @@ STRING_START_REMOVE      = '<start|>'
 
 STRING_VALUES            = '^<.+,.+,.+,.+,.+>'
 STRING_VALUES_REMOVE     = '<|>|'
-
-# Compare String
-global TRANSACTION
-TRANSACTION = ''
-
-global FALSE
-FALSE = False

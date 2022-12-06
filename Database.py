@@ -22,6 +22,7 @@ def connectionDatabase(SQL):
         print("Database Error: %s" % Error)
         connection.rollback()
         cursor.close()
+        exit()
     finally:
         if connection is not None:
             connection.close()
@@ -55,6 +56,7 @@ def archiveToTable():
             commandInsert(line[0], line[1], line[2])
     except:
         print('Error loading data for insert command!')
+        exit()
 
 # Commands executed in table
 def load():
@@ -63,4 +65,5 @@ def load():
         commandCreateTable() # Create table
         archiveToTable()     # Load metadata files for table
     except:
-        print('Error when executing DML commands!');
+        print('Error when executing DML commands!')
+        exit()

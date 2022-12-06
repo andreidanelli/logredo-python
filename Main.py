@@ -1,14 +1,13 @@
 # Configs data base
-from Database     import load
-# Import archive log
-from CheckLogRedo import checkLogRedo
+from Database import load
+# Exibe lista de transações redo
+from ShowTransactionsRedo import showTransactionsRedo
 
 
 def main():
    load()
-   checkLogRedo()
 
 
 if __name__ == '__main__':
-    load()
-    checkLogRedo()
+   load()
+   showTransactionsRedo()

@@ -7,16 +7,18 @@ import Database
 
 def checkLogRedo():
     try:
+        global FTransactions
+        FTransactions = dict()
+
         ListLog = loadLogFile()
         for row in ListLog:
             checkRecordInconsistency(row)
     finally:
         ListLog.clear
+        return FTransactions
 
 def checkRecordInconsistency(line_current):
     try:
-        FTransactions = dict()
-
         FTransaction  = line_current['FTransaction']
         FId           = int(line_current['FId'])
         FColumn       = line_current['FColumn']    
@@ -35,6 +37,7 @@ def checkRecordInconsistency(line_current):
             FTransactions[FTransaction] = 'redo'
     except:
         print(f'Error checking and updating inconsistency record: {FId}')
+        exit()
     finally:
         return FTransactions
         
